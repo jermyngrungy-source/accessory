@@ -1,148 +1,47 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Artisan Haven | Handcrafted Minimalist Goods</title>
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            artisan: {
-              bg: '#FBF9F5',
-              card: '#FFFFFF',
-              dark: '#1C1917',
-              accent: '#5C4033',
-              border: '#E7E2D9',
-              muted: '#78716C',
-            }
-          }
-        }
-      }
-    }
-  </script>
-</head>
-<body class="bg-[#FBF9F5] text-[#1C1917] min-h-screen flex flex-col font-sans">
+<!-- Interactive Navigation Header -->
+<header class="sticky top-0 z-50 bg-[#F8F5F0] border-b border-[#E7E2D9] shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+    
+    <!-- Logo -->
+    <a href="#" onclick="switchTab('home')" class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-[#5C4033] text-[#FBF9F5] flex items-center justify-center font-serif font-bold text-xl italic">AH</div>
+      <div class="flex flex-col">
+        <span class="font-serif font-bold text-2xl text-[#1C1917] leading-none">Artisan Haven</span>
+        <span class="text-[9px] font-semibold tracking-widest uppercase text-gray-500 mt-1">Handcrafted Minimalist Goods</span>
+      </div>
+    </a>
 
-  <!-- HEADER NAVIGATION -->
-  <header class="sticky top-0 z-50 bg-[#F8F5F0] border-b border-[#E7E2D9] shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+    <!-- Center Navigation Links -->
+    <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium text-gray-600">
+      <button onclick="switchTab('home')" class="hover:text-black transition-colors cursor-pointer">Home</button>
+      <button onclick="switchTab('store')" class="hover:text-black transition-colors cursor-pointer">Store Page</button>
+      <button onclick="switchTab('about')" class="hover:text-black transition-colors cursor-pointer">About Us</button>
+      <button onclick="switchTab('contacts')" class="hover:text-black transition-colors cursor-pointer">Contacts</button>
+      <button onclick="switchTab('ai-studio')" class="flex items-center gap-1 hover:text-black transition-colors cursor-pointer">
+        <span>AI Studio</span>
+        <span class="bg-[#E2DDD3] text-[#5C4033] text-[9px] font-bold px-1.5 py-0.5 rounded border border-[#CFC7B9]">GEMINI</span>
+      </button>
+    </nav>
+
+    <!-- Right Controls -->
+    <div class="flex items-center gap-3">
       
-      <!-- Logo -->
-      <div onclick="switchTab('home')" class="flex items-center gap-3 cursor-pointer">
-        <div class="w-10 h-10 bg-[#5C4033] text-[#FBF9F5] flex items-center justify-center font-bold text-xl italic">AH</div>
-        <div class="flex flex-col">
-          <span class="font-bold text-xl leading-none">Artisan Haven</span>
-          <span class="text-[9px] font-semibold tracking-widest uppercase text-gray-500 mt-1">Handcrafted Minimalist Goods</span>
-        </div>
-      </div>
+      <!-- CLICKABLE SELLER DASHBOARD BUTTON -->
+      <button onclick="switchTab('seller-dashboard')" class="bg-[#5C4033] hover:bg-[#1C1917] text-white px-3.5 py-2 rounded-md text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow-sm hover:shadow active:scale-95">
+        <svg class="w-4 h-4 text-amber-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 00-1 1m-6 0h6"/></svg>
+        <span>Seller Dashboard</span>
+      </button>
 
-      <!-- Navigation Links -->
-      <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium text-gray-600">
-        <button id="nav-home" onclick="switchTab('home')" class="text-black font-bold border-b-2 border-black pb-0.5">Home</button>
-        <button id="nav-store" onclick="switchTab('store')" class="hover:text-black">Store Page</button>
-        <button id="nav-ai" onclick="switchTab('ai-studio')" class="hover:text-black flex items-center gap-1">
-          <span>AI Studio</span>
-          <span class="bg-[#E2DDD3] text-[#5C4033] text-[9px] font-bold px-1.5 py-0.5 rounded">GEMINI</span>
-        </button>
-      </nav>
+      <button onclick="switchTab('buyer-history')" class="text-xs font-semibold text-gray-600 hover:text-black px-2 py-1 cursor-pointer">
+        Bought History
+      </button>
 
-      <!-- Right Action Controls -->
-      <div class="flex items-center gap-3">
-        
-        <!-- CLICKABLE SELLER DASHBOARD BUTTON -->
-        <button id="btn-seller-dash" onclick="switchTab('seller-dashboard')" class="bg-[#5C4033] hover:bg-[#1C1917] text-white px-4 py-2 rounded-md text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow">
-          <svg class="w-4 h-4 text-amber-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 00-1 1m-6 0h6"/></svg>
-          <span>Seller Dashboard</span>
-        </button>
-
-        <button onclick="switchTab('buyer-history')" class="text-xs font-semibold text-gray-600 hover:text-black px-2 py-1">
-          Bought History
-        </button>
-
-        <div class="flex items-center border border-gray-300 bg-white rounded pl-1.5 pr-2 py-1 gap-2">
-          <span class="text-xs font-bold">MATEO DELA...</span>
-          <span class="bg-[#5C4033] text-white text-[9px] font-bold px-1 py-0.5 rounded">SELLER</span>
-        </div>
+      <!-- User Badge -->
+      <div class="flex items-center border border-gray-300 bg-white rounded-md pl-1.5 pr-2 py-1 gap-2 shadow-sm">
+        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" class="w-6 h-6 rounded-full object-cover" alt="Avatar">
+        <span class="text-xs font-bold uppercase tracking-tight text-gray-800">MATEO DELA...</span>
+        <span class="bg-[#5C4033] text-white text-[9px] font-bold px-1.5 py-0.5 rounded tracking-wider uppercase">SELLER</span>
       </div>
     </div>
-  </header>
-
-  <!-- CONTENT PANELS -->
-  <main class="flex-grow max-w-7xl mx-auto px-6 py-8 w-full">
-
-    <!-- HOME TAB -->
-    <div id="tab-home" class="tab-content">
-      <h1 class="text-4xl font-bold mb-4">Welcome to Artisan Haven</h1>
-      <p class="text-gray-600">Select an option from the menu or press the Seller Dashboard above.</p>
-    </div>
-
-    <!-- STORE TAB -->
-    <div id="tab-store" class="tab-content hidden">
-      <h2 class="text-2xl font-bold mb-4">Store Listings</h2>
-      <p class="text-gray-600">Browse handcrafted products.</p>
-    </div>
-
-    <!-- SELLER DASHBOARD TAB (TRANSFERS HERE WHEN PRESSED) -->
-    <div id="tab-seller-dashboard" class="tab-content hidden">
-      <div class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm">
-        <h2 class="text-2xl font-bold text-[#5C4033] mb-2">Seller Dashboard</h2>
-        <p class="text-xs text-gray-500 mb-6">Manage your products and view sales metrics.</p>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div class="bg-[#FBF9F5] p-4 border rounded">
-            <span class="text-xs font-bold text-gray-500">Total Revenue</span>
-            <div class="text-xl font-bold mt-1">₱12,450.00</div>
-          </div>
-          <div class="bg-[#FBF9F5] p-4 border rounded">
-            <span class="text-xs font-bold text-gray-500">Active Listings</span>
-            <div class="text-xl font-bold mt-1">8 Items</div>
-          </div>
-          <div class="bg-[#FBF9F5] p-4 border rounded">
-            <span class="text-xs font-bold text-gray-500">Completed Orders</span>
-            <div class="text-xl font-bold mt-1">14 Orders</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- BUYER HISTORY TAB -->
-    <div id="tab-buyer-history" class="tab-content hidden">
-      <h2 class="text-2xl font-bold mb-4">Purchase History</h2>
-      <p class="text-gray-600">You have no recent orders.</p>
-    </div>
-
-    <!-- AI STUDIO TAB -->
-    <div id="tab-ai-studio" class="tab-content hidden">
-      <h2 class="text-2xl font-bold mb-4">AI Studio</h2>
-      <p class="text-gray-600">Powered by Gemini AI.</p>
-    </div>
-
-  </main>
-
-  <!-- TAB SWITCHING JAVASCRIPT ENGINE -->
-  <script>
-    function switchTab(tabName) {
-      // 1. Hide all tab view panels
-      const allTabs = document.querySelectorAll('.tab-content');
-      allTabs.forEach(tab => tab.classList.add('hidden'));
-
-      // 2. Display the active requested tab panel
-      const targetTab = document.getElementById(`tab-${tabName}`);
-      if (targetTab) {
-        targetTab.classList.remove('hidden');
-      }
-
-      // 3. Highlight button states
-      const navHome = document.getElementById('nav-home');
-      const navStore = document.getElementById('nav-store');
-      
-      if (navHome) navHome.className = (tabName === 'home') ? 'text-black font-bold border-b-2 border-black pb-0.5' : 'hover:text-black';
-      if (navStore) navStore.className = (tabName === 'store') ? 'text-black font-bold border-b-2 border-black pb-0.5' : 'hover:text-black';
-    }
-  </script>
-</body>
-</html>
+  </div>
+</header>
