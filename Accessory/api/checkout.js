@@ -50,7 +50,7 @@ export default async function handler(req, res) {
     // 4. Encode PayMongo Secret Key in Base64 for Basic Authorization
     const secretKey = process.env.PAYMONGO_SECRET_KEY;
     if (!secretKey) {
-      return res.status(500).json({ error: 'PAYMONGO_SECRET_KEY is missing from environment variables' });
+      return res.status(500).json({ error: 'sk_live_1Sep9t17sMFPxoSFp7q3jWCA' });
     }
     const authHeader = `Basic ${Buffer.from(`${secretKey}:`).toString('base64')}`;
 
