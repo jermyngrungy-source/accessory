@@ -5,23 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Artisan Haven | Handcrafted Minimalist Goods</title>
   
-  <!-- Tailwind CSS & Supabase JS SDK -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
-  <!-- Google Fonts: Playfair Display & Plus Jakarta Sans -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: {
-            serif: ['"Playfair Display"', 'serif'],
-            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-          },
           colors: {
             artisan: {
               bg: '#FBF9F5',
@@ -36,513 +24,124 @@
       }
     }
   </script>
-  <style>
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #FBF9F5;
-      color: #1C1917;
-    }
-    .star-rating input { display: none; }
-    .star-rating label { cursor: pointer; color: #D6D3D1; transition: color 0.15s ease; }
-    .star-rating input:checked ~ label,
-    .star-rating label:hover,
-    .star-rating label:hover ~ label { color: #5C4033; }
-  </style>
 </head>
-<body class="bg-artisan-bg text-artisan-dark flex flex-col min-h-screen selection:bg-artisan-accent selection:text-white">
+<body class="bg-[#FBF9F5] text-[#1C1917] min-h-screen flex flex-col font-sans">
 
-  <!-- FIXED HEADER BAR WITH HIGH-VISIBILITY CLICKABLE BUTTONS -->
-  <header class="sticky top-0 z-50 bg-[#F8F5F0] border-b border-artisan-border shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+  <!-- HEADER NAVIGATION -->
+  <header class="sticky top-0 z-50 bg-[#F8F5F0] border-b border-[#E7E2D9] shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
       
-      <!-- Logo Section -->
-      <a href="#" onclick="switchTab('home')" class="flex items-center gap-3 group shrink-0">
-        <div class="w-10 h-10 bg-[#5C4033] text-[#FBF9F5] flex items-center justify-center font-serif font-bold text-xl italic tracking-tighter shadow-sm">
-          AH
-        </div>
+      <!-- Logo -->
+      <div onclick="switchTab('home')" class="flex items-center gap-3 cursor-pointer">
+        <div class="w-10 h-10 bg-[#5C4033] text-[#FBF9F5] flex items-center justify-center font-bold text-xl italic">AH</div>
         <div class="flex flex-col">
-          <span class="font-serif font-bold text-2xl tracking-tight text-artisan-dark leading-none group-hover:text-artisan-accent transition-colors">Artisan Haven</span>
-          <span class="text-[9px] font-semibold tracking-[0.2em] uppercase text-artisan-muted mt-1">Handcrafted Minimalist Goods</span>
+          <span class="font-bold text-xl leading-none">Artisan Haven</span>
+          <span class="text-[9px] font-semibold tracking-widest uppercase text-gray-500 mt-1">Handcrafted Minimalist Goods</span>
         </div>
-      </a>
+      </div>
 
-      <!-- Center Navigation Bar -->
-      <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium text-artisan-muted">
-        <button id="nav-home" onclick="switchTab('home')" class="text-artisan-dark font-bold border-b-2 border-artisan-dark pb-0.5 transition-all">Home</button>
-        <button id="nav-store" onclick="switchTab('store')" class="hover:text-artisan-dark transition-colors">Store Page</button>
-        <button id="nav-about" onclick="scrollToSection('about')" class="hover:text-artisan-dark transition-colors">About Us</button>
-        <button id="nav-contacts" onclick="scrollToSection('contacts')" class="hover:text-artisan-dark transition-colors">Contacts</button>
-        
-        <!-- AI Studio Button with Badge -->
-        <button id="nav-ai" onclick="switchTab('ai-studio')" class="flex items-center gap-1.5 hover:text-artisan-dark transition-colors">
+      <!-- Navigation Links -->
+      <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium text-gray-600">
+        <button id="nav-home" onclick="switchTab('home')" class="text-black font-bold border-b-2 border-black pb-0.5">Home</button>
+        <button id="nav-store" onclick="switchTab('store')" class="hover:text-black">Store Page</button>
+        <button id="nav-ai" onclick="switchTab('ai-studio')" class="hover:text-black flex items-center gap-1">
           <span>AI Studio</span>
-          <span class="bg-[#E2DDD3] text-[#5C4033] text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border border-[#CFC7B9]">Gemini</span>
+          <span class="bg-[#E2DDD3] text-[#5C4033] text-[9px] font-bold px-1.5 py-0.5 rounded">GEMINI</span>
         </button>
       </nav>
 
       <!-- Right Action Controls -->
       <div class="flex items-center gap-3">
         
-        <!-- UPDATED SELLER DASHBOARD BUTTON (PROMINENT & CLICKABLE) -->
-        <button onclick="switchTab('seller-dashboard')" class="bg-[#5C4033] hover:bg-artisan-dark text-white px-3.5 py-2 rounded-md text-xs font-bold flex items-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-95 cursor-pointer">
+        <!-- CLICKABLE SELLER DASHBOARD BUTTON -->
+        <button id="btn-seller-dash" onclick="switchTab('seller-dashboard')" class="bg-[#5C4033] hover:bg-[#1C1917] text-white px-4 py-2 rounded-md text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow">
           <svg class="w-4 h-4 text-amber-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 00-1 1m-6 0h6"/></svg>
-          <span class="tracking-tight">Seller Dashboard</span>
+          <span>Seller Dashboard</span>
         </button>
 
-        <!-- Bought History Link -->
-        <button onclick="switchTab('buyer-history')" class="hidden sm:block text-xs font-semibold text-artisan-muted hover:text-artisan-dark transition-colors cursor-pointer px-2 py-1 rounded hover:bg-black/5">
+        <button onclick="switchTab('buyer-history')" class="text-xs font-semibold text-gray-600 hover:text-black px-2 py-1">
           Bought History
         </button>
 
-        <!-- User Profile Tag / Auth Trigger -->
-        <div id="authProfileContainer">
-          <!-- Logged In Profile Tag -->
-          <div id="userProfileTag" class="flex items-center border border-artisan-border bg-white rounded-md pl-1.5 pr-2 py-1 gap-2 shadow-sm">
-            <img id="userAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" class="w-6 h-6 rounded-full object-cover" alt="User">
-            <span id="userDisplayName" class="text-xs font-bold uppercase tracking-tight text-artisan-dark truncate max-w-[100px]">Mateo Dela...</span>
-            <span id="userRoleBadge" class="bg-[#5C4033] text-white text-[9px] font-bold px-1.5 py-0.5 rounded tracking-wider uppercase">Seller</span>
-          </div>
-
-          <!-- Logged Out Trigger -->
-          <div id="authButtons" class="hidden flex items-center gap-2">
-            <button onclick="openAuthModal('login')" class="text-xs font-bold px-2.5 py-1 text-artisan-dark hover:underline">Login</button>
-            <button onclick="openAuthModal('register')" class="text-xs font-bold bg-artisan-dark text-white px-3 py-1.5 rounded">Register</button>
-          </div>
+        <div class="flex items-center border border-gray-300 bg-white rounded pl-1.5 pr-2 py-1 gap-2">
+          <span class="text-xs font-bold">MATEO DELA...</span>
+          <span class="bg-[#5C4033] text-white text-[9px] font-bold px-1 py-0.5 rounded">SELLER</span>
         </div>
-
-        <!-- Logout Button -->
-        <button onclick="logout()" title="Logout" class="p-1.5 text-artisan-muted hover:text-red-600 transition-colors rounded hover:bg-black/5">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-        </button>
-
-        <!-- Cart Icon Box -->
-        <button onclick="switchTab('store')" class="w-8 h-8 bg-artisan-dark text-white flex items-center justify-center rounded transition-transform hover:scale-105">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-        </button>
-
       </div>
     </div>
   </header>
 
-  <main class="flex-grow">
-    
-    <!-- VIEW 1: HOME & HERO -->
-    <div id="view-home">
-      <section class="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
-        <div class="md:col-span-7 space-y-6">
-          <span class="text-xs font-bold uppercase tracking-[0.2em] text-artisan-accent">Exclusive Artisanal Collection</span>
-          <h1 class="font-serif text-5xl sm:text-6xl font-bold leading-tight text-artisan-dark">
-            Timeless Craftsmanship for the Modern Space.
-          </h1>
-          <p class="text-artisan-muted text-base leading-relaxed max-w-lg">
-            Carefully curated minimalist office accessories, ceramic desk goods, and handcrafted organizational essentials.
-          </p>
-          <div class="pt-4 flex gap-4">
-            <button onclick="switchTab('store')" class="bg-artisan-dark text-white font-semibold px-8 py-3.5 rounded hover:bg-artisan-accent transition-colors shadow-md">Explore Collection</button>
-            <button onclick="scrollToSection('about')" class="border border-artisan-border text-artisan-dark font-semibold px-8 py-3.5 rounded hover:bg-white transition-colors">Our Story</button>
-          </div>
-        </div>
+  <!-- CONTENT PANELS -->
+  <main class="flex-grow max-w-7xl mx-auto px-6 py-8 w-full">
 
-        <div class="md:col-span-5 border border-artisan-border bg-white p-6 rounded-lg shadow-sm">
-          <img src="https://images.unsplash.com/photo-1585336261026-675768e7a9f2?auto=format&fit=crop&w=600&q=80" alt="Featured Craft" class="w-full h-64 object-cover rounded mb-4">
-          <div class="flex justify-between items-center">
-            <div>
-              <h3 class="font-serif font-bold text-lg">Handcrafted Ceramic Pen Tray</h3>
-              <p class="text-xs text-artisan-muted">Made from locally sourced clay</p>
-            </div>
-            <span class="font-serif font-bold text-xl text-artisan-accent">₱1,250.00</span>
-          </div>
-        </div>
-      </section>
+    <!-- HOME TAB -->
+    <div id="tab-home" class="tab-content">
+      <h1 class="text-4xl font-bold mb-4">Welcome to Artisan Haven</h1>
+      <p class="text-gray-600">Select an option from the menu or press the Seller Dashboard above.</p>
     </div>
 
-    <!-- VIEW 2: STORE PAGE -->
-    <div id="view-store" class="hidden">
-      <section class="max-w-7xl mx-auto px-6 py-12">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 border-b border-artisan-border pb-6">
-          <div>
-            <h2 class="font-serif text-3xl font-bold text-artisan-dark">Artisan Store</h2>
-            <p class="text-xs text-artisan-muted mt-1">Discover handcrafted goods from verified independent creators</p>
-          </div>
-          <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Search goods..." class="mt-4 md:mt-0 w-full md:w-64 bg-white border border-artisan-border px-4 py-2 rounded text-xs focus:outline-none focus:border-artisan-accent">
-        </div>
-
-        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <!-- Dynamic Products Load Here -->
-        </div>
-      </section>
+    <!-- STORE TAB -->
+    <div id="tab-store" class="tab-content hidden">
+      <h2 class="text-2xl font-bold mb-4">Store Listings</h2>
+      <p class="text-gray-600">Browse handcrafted products.</p>
     </div>
 
-    <!-- VIEW 3: SELLER DASHBOARD -->
-    <div id="view-seller-dashboard" class="hidden">
-      <section class="max-w-7xl mx-auto px-6 py-12">
-        <div class="mb-8 flex justify-between items-center border-b border-artisan-border pb-4">
-          <div>
-            <h2 class="font-serif text-3xl font-bold text-artisan-dark">Seller Management Dashboard</h2>
-            <p class="text-xs text-artisan-muted mt-1">List handcrafted products and view your automated sales records.</p>
+    <!-- SELLER DASHBOARD TAB (TRANSFERS HERE WHEN PRESSED) -->
+    <div id="tab-seller-dashboard" class="tab-content hidden">
+      <div class="bg-white border border-gray-200 p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-[#5C4033] mb-2">Seller Dashboard</h2>
+        <p class="text-xs text-gray-500 mb-6">Manage your products and view sales metrics.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="bg-[#FBF9F5] p-4 border rounded">
+            <span class="text-xs font-bold text-gray-500">Total Revenue</span>
+            <div class="text-xl font-bold mt-1">₱12,450.00</div>
           </div>
-          <span class="bg-[#5C4033] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">Seller Active</span>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <!-- Add Item Form -->
-          <div class="lg:col-span-4 bg-white border border-artisan-border p-6 rounded shadow-sm h-fit">
-            <h3 class="font-serif font-bold text-lg mb-4 text-artisan-dark border-b border-artisan-border pb-2">Post New Product</h3>
-            <form id="addProductForm" onsubmit="handleCreateProduct(event)" class="space-y-4">
-              <div>
-                <label class="block text-[10px] font-bold uppercase tracking-wider text-artisan-muted mb-1">Title</label>
-                <input type="text" id="prodTitle" required class="w-full border border-artisan-border p-2 rounded text-xs outline-none focus:border-artisan-accent">
-              </div>
-              <div>
-                <label class="block text-[10px] font-bold uppercase tracking-wider text-artisan-muted mb-1">Category</label>
-                <select id="prodCategory" class="w-full border border-artisan-border p-2 rounded text-xs outline-none focus:border-artisan-accent">
-                  <option value="Stationery">Stationery</option>
-                  <option value="Ceramics">Ceramics</option>
-                  <option value="Woodwork">Woodwork</option>
-                  <option value="Accessories">Accessories</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-[10px] font-bold uppercase tracking-wider text-artisan-muted mb-1">Price (PHP)</label>
-                <input type="number" step="0.01" id="prodPrice" required class="w-full border border-artisan-border p-2 rounded text-xs outline-none focus:border-artisan-accent">
-              </div>
-              <div>
-                <label class="block text-[10px] font-bold uppercase tracking-wider text-artisan-muted mb-1">Image URL</label>
-                <input type="url" id="prodImage" placeholder="https://..." required class="w-full border border-artisan-border p-2 rounded text-xs outline-none focus:border-artisan-accent">
-              </div>
-              <div>
-                <label class="block text-[10px] font-bold uppercase tracking-wider text-artisan-muted mb-1">Description</label>
-                <textarea id="prodDesc" rows="3" class="w-full border border-artisan-border p-2 rounded text-xs outline-none focus:border-artisan-accent"></textarea>
-              </div>
-              <button type="submit" class="w-full bg-artisan-dark text-white font-bold py-2.5 rounded text-xs hover:bg-artisan-accent transition-colors">Publish Craft Listing</button>
-            </form>
+          <div class="bg-[#FBF9F5] p-4 border rounded">
+            <span class="text-xs font-bold text-gray-500">Active Listings</span>
+            <div class="text-xl font-bold mt-1">8 Items</div>
           </div>
-
-          <!-- Sales Records Table -->
-          <div class="lg:col-span-8 bg-white border border-artisan-border p-6 rounded shadow-sm">
-            <h3 class="font-serif font-bold text-lg mb-4 text-artisan-dark border-b border-artisan-border pb-2">Sales History</h3>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-xs text-artisan-dark">
-                <thead class="bg-artisan-bg uppercase font-bold text-[10px] text-artisan-muted">
-                  <tr>
-                    <th class="p-3">Order Ref</th>
-                    <th class="p-3">Total Amount</th>
-                    <th class="p-3">Payment Status</th>
-                    <th class="p-3">Date</th>
-                  </tr>
-                </thead>
-                <tbody id="sellerSalesTable" class="divide-y divide-artisan-border">
-                  <tr><td colspan="4" class="p-4 text-center text-artisan-muted">Fetching sales history...</td></tr>
-                </tbody>
-              </table>
-            </div>
+          <div class="bg-[#FBF9F5] p-4 border rounded">
+            <span class="text-xs font-bold text-gray-500">Completed Orders</span>
+            <div class="text-xl font-bold mt-1">14 Orders</div>
           </div>
-        </div>
-      </section>
-    </div>
-
-    <!-- VIEW 4: BUYER BOUGHT HISTORY -->
-    <div id="view-buyer-history" class="hidden">
-      <section class="max-w-7xl mx-auto px-6 py-12">
-        <h2 class="font-serif text-3xl font-bold text-artisan-dark mb-6">Bought History</h2>
-        <div class="bg-white border border-artisan-border p-6 rounded shadow-sm overflow-x-auto">
-          <table class="w-full text-left text-xs text-artisan-dark">
-            <thead class="bg-artisan-bg uppercase font-bold text-[10px] text-artisan-muted">
-              <tr>
-                <th class="p-3">Item</th>
-                <th class="p-3">Amount</th>
-                <th class="p-3">Status</th>
-                <th class="p-3">Date</th>
-                <th class="p-3">Action</th>
-              </tr>
-            </thead>
-            <tbody id="buyerOrdersTable" class="divide-y divide-artisan-border">
-              <tr><td colspan="5" class="p-4 text-center text-artisan-muted">Fetching order history...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </div>
-
-    <!-- VIEW 5: AI STUDIO -->
-    <div id="view-ai-studio" class="hidden">
-      <section class="max-w-4xl mx-auto px-6 py-12">
-        <div class="bg-white border border-artisan-border p-8 rounded shadow-sm text-center space-y-4">
-          <span class="bg-[#E2DDD3] text-[#5C4033] text-xs font-bold uppercase tracking-wider px-2 py-1 rounded">Powered by Gemini AI</span>
-          <h2 class="font-serif text-3xl font-bold text-artisan-dark">Artisan Haven Studio</h2>
-          <p class="text-xs text-artisan-muted max-w-md mx-auto">Generate product descriptions, story ideas, or craft naming recommendations using our generative studio.</p>
-          <div class="pt-4">
-            <textarea id="aiPrompt" rows="4" class="w-full border border-artisan-border p-3 rounded text-xs focus:border-artisan-accent outline-none" placeholder="Ask Gemini AI for craft ideas or copywriting help..."></textarea>
-            <button onclick="generateAIContent()" class="mt-3 bg-artisan-dark text-white font-semibold px-6 py-2.5 rounded text-xs hover:bg-artisan-accent transition-colors">Generate with Gemini</button>
-          </div>
-          <div id="aiResult" class="hidden mt-6 p-4 bg-artisan-bg border border-artisan-border rounded text-left text-xs text-artisan-dark leading-relaxed"></div>
-        </div>
-      </section>
-    </div>
-
-    <!-- ABOUT & CONTACT SECTIONS -->
-    <section id="about" class="bg-[#F3EFEA] py-16 border-t border-artisan-border">
-      <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
-        <div>
-          <h2 class="font-serif text-3xl font-bold text-artisan-dark mb-3">Minimalist Intentionality</h2>
-          <p class="text-xs text-artisan-muted leading-relaxed">Every item on Artisan Haven is designed with clean geometry, natural tactile finishes, and sustainable craftsmanship.</p>
-        </div>
-        <div id="contacts" class="bg-white p-6 border border-artisan-border rounded shadow-sm space-y-2">
-          <h4 class="font-serif font-bold text-base">Get in Touch</h4>
-          <p class="text-xs text-artisan-muted">Direct Support: concierges@artisanhaven.ph</p>
-          <p class="text-xs text-artisan-muted">Manila HQ: +63 (02) 8888-2026</p>
         </div>
       </div>
-    </section>
+    </div>
+
+    <!-- BUYER HISTORY TAB -->
+    <div id="tab-buyer-history" class="tab-content hidden">
+      <h2 class="text-2xl font-bold mb-4">Purchase History</h2>
+      <p class="text-gray-600">You have no recent orders.</p>
+    </div>
+
+    <!-- AI STUDIO TAB -->
+    <div id="tab-ai-studio" class="tab-content hidden">
+      <h2 class="text-2xl font-bold mb-4">AI Studio</h2>
+      <p class="text-gray-600">Powered by Gemini AI.</p>
+    </div>
+
   </main>
 
-  <!-- FOOTER -->
-  <footer class="bg-artisan-dark text-artisan-muted py-8 text-center text-xs border-t border-artisan-dark">
-    <p>&copy; 2026 Artisan Haven Goods. Built for minimalist workspaces.</p>
-  </footer>
-
-  <!-- AUTH MODAL -->
-  <div id="authModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex justify-center items-center hidden p-4">
-    <div class="bg-white w-full max-w-md p-6 rounded shadow-xl relative border border-artisan-border">
-      <button onclick="closeAuthModal()" class="absolute top-3 right-3 text-artisan-muted hover:text-black">✕</button>
-      <h3 id="modalTitle" class="font-serif font-bold text-xl text-artisan-dark mb-4">Authentication</h3>
-      <form id="authForm" onsubmit="handleAuthSubmit(event)" class="space-y-3 text-xs">
-        <div>
-          <label class="block font-bold uppercase tracking-wider text-artisan-muted mb-1">Email Address</label>
-          <input type="email" id="authEmail" required class="w-full border border-artisan-border p-2 rounded outline-none focus:border-artisan-accent">
-        </div>
-        <div>
-          <label class="block font-bold uppercase tracking-wider text-artisan-muted mb-1">Password</label>
-          <input type="password" id="authPassword" required class="w-full border border-artisan-border p-2 rounded outline-none focus:border-artisan-accent">
-        </div>
-        <div id="registerFields" class="space-y-3 hidden">
-          <div>
-            <label class="block font-bold uppercase tracking-wider text-artisan-muted mb-1">Full Name</label>
-            <input type="text" id="authName" class="w-full border border-artisan-border p-2 rounded outline-none focus:border-artisan-accent">
-          </div>
-          <div>
-            <label class="block font-bold uppercase tracking-wider text-artisan-muted mb-1">GCash Number</label>
-            <input type="text" id="authGcash" placeholder="0917XXXXXXX" class="w-full border border-artisan-border p-2 rounded outline-none focus:border-artisan-accent">
-          </div>
-        </div>
-        <button type="submit" class="w-full bg-artisan-dark text-white font-bold py-2.5 rounded hover:bg-artisan-accent transition-colors">Submit</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- JAVASCRIPT LOGIC WITH GUARANTEED TAB SWITCHING -->
+  <!-- TAB SWITCHING JAVASCRIPT ENGINE -->
   <script>
-    const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    function switchTab(tabName) {
+      // 1. Hide all tab view panels
+      const allTabs = document.querySelectorAll('.tab-content');
+      allTabs.forEach(tab => tab.classList.add('hidden'));
 
-    let currentUser = null;
-    let authMode = 'login';
-    let loadedProducts = [];
-
-    window.addEventListener('DOMContentLoaded', async () => {
-      checkUserSession();
-      loadProducts();
-    });
-
-    async function checkUserSession() {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        currentUser = session.user;
-        updateUIForAuthenticatedUser();
-      } else {
-        document.getElementById('userDisplayName').innerText = 'MATEO DELA...';
-      }
-    }
-
-    function updateUIForAuthenticatedUser() {
-      document.getElementById('authButtons').classList.add('hidden');
-      document.getElementById('userProfileTag').classList.remove('hidden');
-      document.getElementById('userDisplayName').innerText = currentUser.email.split('@')[0].toUpperCase();
-    }
-
-    // RELIABLE UNIVERSAL TAB SWITCHER
-    function switchTab(viewName) {
-      const allViews = ['home', 'store', 'seller-dashboard', 'buyer-history', 'ai-studio'];
-      
-      allViews.forEach(v => {
-        const el = document.getElementById(`view-${v}`);
-        if (el) el.classList.add('hidden');
-      });
-
-      const target = document.getElementById(`view-${viewName}`);
-      if (target) {
-        target.classList.remove('hidden');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+      // 2. Display the active requested tab panel
+      const targetTab = document.getElementById(`tab-${tabName}`);
+      if (targetTab) {
+        targetTab.classList.remove('hidden');
       }
 
-      // Sync header navigation styling
+      // 3. Highlight button states
       const navHome = document.getElementById('nav-home');
       const navStore = document.getElementById('nav-store');
-      if (navHome && navStore) {
-        navHome.className = viewName === 'home' ? 'text-artisan-dark font-bold border-b-2 border-artisan-dark pb-0.5' : 'hover:text-artisan-dark transition-colors';
-        navStore.className = viewName === 'store' ? 'text-artisan-dark font-bold border-b-2 border-artisan-dark pb-0.5' : 'hover:text-artisan-dark transition-colors';
-      }
-
-      if (viewName === 'seller-dashboard') loadSellerData();
-      if (viewName === 'buyer-history') loadBuyerData();
-    }
-
-    function scrollToSection(id) {
-      switchTab('home');
-      setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    }
-
-    function openAuthModal(mode) {
-      authMode = mode;
-      document.getElementById('modalTitle').innerText = mode === 'login' ? 'Sign In' : 'Create Account';
-      document.getElementById('registerFields').classList.toggle('hidden', mode === 'login');
-      document.getElementById('authModal').classList.remove('hidden');
-    }
-
-    function closeAuthModal() {
-      document.getElementById('authModal').classList.add('hidden');
-    }
-
-    async function handleAuthSubmit(e) {
-      e.preventDefault();
-      const email = document.getElementById('authEmail').value;
-      const password = document.getElementById('authPassword').value;
-
-      if (authMode === 'register') {
-        const { data, error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            data: {
-              full_name: document.getElementById('authName').value,
-              gcash_number: document.getElementById('authGcash').value
-            }
-          }
-        });
-        if (error) alert(error.message);
-        else { alert('Registered successfully!'); closeAuthModal(); }
-      } else {
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) alert(error.message);
-        else {
-          currentUser = data.user;
-          updateUIForAuthenticatedUser();
-          closeAuthModal();
-        }
-      }
-    }
-
-    async function logout() {
-      await supabase.auth.signOut();
-      window.location.reload();
-    }
-
-    async function loadProducts() {
-      const { data } = await supabase.from('products').select(`*, reviews(*)`).order('created_at', { ascending: false });
-      loadedProducts = data || [];
-      renderProducts(loadedProducts);
-    }
-
-    function renderProducts(products) {
-      const container = document.getElementById('productGrid');
-      if (!products.length) {
-        container.innerHTML = `<p class="col-span-full text-center py-8 text-artisan-muted text-xs">No goods available currently.</p>`;
-        return;
-      }
-
-      container.innerHTML = products.map(p => `
-        <div class="bg-white border border-artisan-border rounded p-4 flex flex-col justify-between group">
-          <div>
-            <img src="${p.image_url}" class="w-full h-40 object-cover rounded mb-3">
-            <span class="text-[9px] font-bold text-artisan-accent uppercase tracking-widest">${p.category}</span>
-            <h4 class="font-serif font-bold text-sm text-artisan-dark mt-0.5">${p.title}</h4>
-            <p class="text-artisan-muted text-xs mt-1 line-clamp-2">${p.description || ''}</p>
-          </div>
-          <div class="mt-4 pt-2 border-t border-artisan-border flex justify-between items-center">
-            <span class="font-serif font-bold text-sm">₱${parseFloat(p.price).toFixed(2)}</span>
-            <button onclick="buyProduct('${p.id}')" class="bg-artisan-dark text-white text-xs font-semibold px-3 py-1 rounded hover:bg-artisan-accent transition-colors">Buy</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function filterProducts() {
-      const term = document.getElementById('searchInput').value.toLowerCase();
-      renderProducts(loadedProducts.filter(p => p.title.toLowerCase().includes(term)));
-    }
-
-    async function buyProduct(productId) {
-      if (!currentUser) return openAuthModal('login');
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId, buyerId: currentUser.id })
-      });
-      const data = await res.json();
-      if (data.checkoutUrl) window.location.href = data.checkoutUrl;
-      else alert(data.error);
-    }
-
-    async function handleCreateProduct(e) {
-      e.preventDefault();
-      if (!currentUser) return openAuthModal('login');
-      const { error } = await supabase.from('products').insert([{
-        seller_id: currentUser.id,
-        title: document.getElementById('prodTitle').value,
-        category: document.getElementById('prodCategory').value,
-        price: parseFloat(document.getElementById('prodPrice').value),
-        image_url: document.getElementById('prodImage').value,
-        description: document.getElementById('prodDesc').value
-      }]);
-      if (error) alert(error.message);
-      else { alert('Published!'); loadProducts(); }
-    }
-
-    async function loadSellerData() {
-      if (!currentUser) return;
-      const { data } = await supabase.from('orders').select(`*, products(title)`).eq('seller_id', currentUser.id);
-      const tbody = document.getElementById('sellerSalesTable');
-      if (!data || !data.length) {
-        tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-artisan-muted">No sales yet.</td></tr>`;
-        return;
-      }
-      tbody.innerHTML = data.map(o => `
-        <tr>
-          <td class="p-3 font-mono">${o.id.substring(0,8)}...</td>
-          <td class="p-3 font-bold">₱${o.amount}</td>
-          <td class="p-3"><span class="px-2 py-0.5 bg-green-100 text-green-800 rounded text-[10px] uppercase font-bold">${o.status}</span></td>
-          <td class="p-3">${new Date(o.created_at).toLocaleDateString()}</td>
-        </tr>
-      `).join('');
-    }
-
-    async function loadBuyerData() {
-      if (!currentUser) return;
-      const { data } = await supabase.from('orders').select(`*, products(id, title)`).eq('buyer_id', currentUser.id);
-      const tbody = document.getElementById('buyerOrdersTable');
-      if (!data || !data.length) {
-        tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-artisan-muted">No purchases found.</td></tr>`;
-        return;
-      }
-      tbody.innerHTML = data.map(o => `
-        <tr>
-          <td class="p-3 font-bold">${o.products?.title || 'Craft Item'}</td>
-          <td class="p-3">₱${o.amount}</td>
-          <td class="p-3"><span class="px-2 py-0.5 bg-green-100 text-green-800 rounded text-[10px] uppercase font-bold">${o.status}</span></td>
-          <td class="p-3">${new Date(o.created_at).toLocaleDateString()}</td>
-          <td class="p-3"><button onclick="openReviewModal('${o.products?.id}')" class="border border-artisan-border px-2 py-1 rounded text-[10px]">Review</button></td>
-        </tr>
-      `).join('');
-    }
-
-    function generateAIContent() {
-      const prompt = document.getElementById('aiPrompt').value;
-      const res = document.getElementById('aiResult');
-      res.classList.remove('hidden');
-      res.innerText = `[Gemini AI Draft]: Based on your prompt ("${prompt}"), here is a suggested tagline: "Elevate your daily routine with handcrafted minimalist precision."`;
+      
+      if (navHome) navHome.className = (tabName === 'home') ? 'text-black font-bold border-b-2 border-black pb-0.5' : 'hover:text-black';
+      if (navStore) navStore.className = (tabName === 'store') ? 'text-black font-bold border-b-2 border-black pb-0.5' : 'hover:text-black';
     }
   </script>
 </body>
