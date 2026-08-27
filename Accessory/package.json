@@ -1,1 +1,9 @@
-
+{
+  "name": "office-supplies-marketplace",
+  "version": "1.0.0",
+  "description": "Office Supplies E-Commerce Platform",
+  "main": "index.html",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0"
+  }
+}
