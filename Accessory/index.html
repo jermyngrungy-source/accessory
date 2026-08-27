@@ -4,49 +4,51 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Artisan Haven</title>
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #FBF9F5; color: #1C1917; }
+    .tab-view { display: none; }
+    .tab-view.active { display: block; }
+  </style>
 </head>
-<body class="bg-[#FBF9F5] text-[#1C1917] min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col">
 
   <!-- HEADER -->
   <header class="sticky top-0 z-50 bg-[#F8F5F0] border-b border-[#E7E2D9] shadow-sm">
     <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
       
-      <!-- Logo Link (Opens Main Page) -->
-      <a href="index.html" class="flex items-center gap-3 decoration-0">
+      <!-- Logo -->
+      <button onclick="showTab('home')" class="flex items-center gap-3 text-left">
         <div class="w-10 h-10 bg-[#5C4033] text-[#FBF9F5] flex items-center justify-center font-bold text-xl italic">AH</div>
         <div class="flex flex-col">
           <span class="font-bold text-xl leading-none text-[#1C1917]">Artisan Haven</span>
           <span class="text-[9px] font-semibold tracking-widest uppercase text-gray-500 mt-1">Handcrafted Goods</span>
         </div>
-      </a>
+      </button>
 
-      <!-- Center Nav Links -->
+      <!-- Center Links -->
       <nav class="hidden lg:flex items-center space-x-6 text-sm font-medium text-gray-600">
-        <a href="index.html" class="hover:text-black transition-colors">Home</a>
-        <a href="store.html" target="_blank" class="hover:text-black transition-colors">Store Page</a>
-        <a href="about.html" target="_blank" class="hover:text-black transition-colors">About Us</a>
-        <a href="contact.html" target="_blank" class="hover:text-black transition-colors">Contacts</a>
+        <button onclick="showTab('home')" class="hover:text-black">Home</button>
+        <button onclick="showTab('store')" class="hover:text-black">Store Page</button>
+        <button onclick="showTab('ai')" class="flex items-center gap-1 hover:text-black">
+          <span>AI Studio</span>
+          <span class="bg-[#E2DDD3] text-[#5C4033] text-[9px] font-bold px-1.5 py-0.5 rounded border border-[#CFC7B9]">GEMINI</span>
+        </button>
       </nav>
 
-      <!-- Right Controls -->
+      <!-- Right Action Controls -->
       <div class="flex items-center gap-3">
         
-        <!-- CLICKABLE SELLER DASHBOARD LINK (Opens in New Tab) -->
-        <a href="dashboard.html" target="_blank" class="bg-[#5C4033] hover:bg-[#1C1917] text-white px-4 py-2 rounded-md text-xs font-bold flex items-center gap-2 transition-all shadow cursor-pointer">
-          <svg class="w-4 h-4 text-amber-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 00-1 1m-6 0h6"/>
-          </svg>
-          <span>Seller Dashboard ↗</span>
-        </a>
+        <!-- FUNCTIONAL SELLER DASHBOARD BUTTON -->
+        <button onclick="showTab('seller-dashboard')" class="bg-[#5C4033] hover:bg-[#1C1917] text-white px-4 py-2 rounded-md text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow active:scale-95">
+          <svg class="w-4 h-4 text-amber-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 00-1 1m-6 0h6"/></svg>
+          <span>Seller Dashboard</span>
+        </button>
 
-        <!-- Bought History -->
-        <a href="history.html" target="_blank" class="text-xs font-semibold text-gray-600 hover:text-black px-2 py-1">
+        <button onclick="showTab('history')" class="text-xs font-semibold text-gray-600 hover:text-black px-2 py-1">
           Bought History
-        </a>
+        </button>
 
-        <!-- User Badge -->
         <div class="flex items-center border border-gray-300 bg-white rounded pl-1.5 pr-2 py-1 gap-2 shadow-sm">
           <span class="text-xs font-bold text-gray-800">MATEO DELA...</span>
           <span class="bg-[#5C4033] text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase">SELLER</span>
@@ -55,18 +57,97 @@
     </div>
   </header>
 
-  <!-- HOME PAGE CONTENT -->
-  <main class="max-w-7xl mx-auto px-6 py-12 flex-grow w-full">
-    <div class="bg-white border border-[#E7E2D9] p-8 rounded-lg shadow-sm text-center">
-      <h1 class="text-3xl font-bold text-[#1C1917] mb-2">Welcome to Artisan Haven</h1>
-      <p class="text-gray-600 mb-6">Click the button below to open your Seller Dashboard in a new browser tab.</p>
-      
-      <!-- DIRECT TAB LINK -->
-      <a href="dashboard.html" target="_blank" class="inline-block bg-[#5C4033] text-white text-sm font-bold px-6 py-3 rounded-md hover:bg-[#1C1917] transition-all shadow">
-        Open Seller Dashboard Tab
-      </a>
+  <!-- MAIN TAB VIEWS -->
+  <main class="max-w-7xl mx-auto px-6 py-8 flex-grow w-full">
+
+    <!-- TAB 1: HOME PAGE -->
+    <div id="tab-home" class="tab-view active">
+      <div class="bg-white border border-[#E7E2D9] p-8 rounded-lg shadow-sm">
+        <h1 class="text-3xl font-bold text-[#1C1917] mb-2">Welcome to Artisan Haven</h1>
+        <p class="text-sm text-gray-600 mb-6">Click the button below to switch directly to the Seller Dashboard tab.</p>
+        <button onclick="showTab('seller-dashboard')" class="bg-[#5C4033] text-white text-xs font-bold px-4 py-2 rounded shadow">
+          Switch to Seller Dashboard
+        </button>
+      </div>
     </div>
+
+    <!-- TAB 2: STORE PAGE -->
+    <div id="tab-store" class="tab-view">
+      <div class="bg-white border border-[#E7E2D9] p-8 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-[#1C1917] mb-2">Store Catalog</h2>
+        <p class="text-sm text-gray-600">Browse curated handcrafted goods.</p>
+      </div>
+    </div>
+
+    <!-- TAB 3: SELLER DASHBOARD VIEW -->
+    <div id="tab-seller-dashboard" class="tab-view">
+      <div class="bg-white border border-[#E7E2D9] p-8 rounded-lg shadow-sm space-y-6">
+        <div class="border-b pb-4 flex justify-between items-center">
+          <div>
+            <h2 class="text-2xl font-bold text-[#5C4033]">Seller Management Dashboard</h2>
+            <p class="text-xs text-gray-500 mt-1">Manage orders and review sales performance.</p>
+          </div>
+          <span class="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full uppercase">Status: Active</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="p-4 bg-[#FBF9F5] border border-[#E7E2D9] rounded">
+            <span class="text-xs font-bold text-gray-500 uppercase">Total Sales Revenue</span>
+            <div class="text-2xl font-bold text-[#1C1917] mt-1">₱14,850.00</div>
+          </div>
+          <div class="p-4 bg-[#FBF9F5] border border-[#E7E2D9] rounded">
+            <span class="text-xs font-bold text-gray-500 uppercase">Active Listings</span>
+            <div class="text-2xl font-bold text-[#1C1917] mt-1">3 Goods</div>
+          </div>
+          <div class="p-4 bg-[#FBF9F5] border border-[#E7E2D9] rounded">
+            <span class="text-xs font-bold text-gray-500 uppercase">PayMongo Status</span>
+            <div class="text-2xl font-bold text-green-600 mt-1">Connected</div>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-bold text-sm text-gray-800 mb-2">Recent Sales</h3>
+          <div class="border rounded bg-[#FBF9F5] p-3 text-xs space-y-2">
+            <div class="flex justify-between border-b pb-1"><span>Handcarved Wooden Mug</span><strong>₱1,250.00</strong></div>
+            <div class="flex justify-between border-b pb-1"><span>Minimalist Clay Vase</span><strong>₱2,400.00</strong></div>
+            <div class="flex justify-between"><span>Woven Table Runner</span><strong>₱850.00</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: BOUGHT HISTORY -->
+    <div id="tab-history" class="tab-view">
+      <div class="bg-white border border-[#E7E2D9] p-8 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-[#1C1917] mb-2">Purchase History</h2>
+        <p class="text-sm text-gray-600">Your buyer activity records will appear here.</p>
+      </div>
+    </div>
+
+    <!-- TAB 5: AI STUDIO -->
+    <div id="tab-ai" class="tab-view">
+      <div class="bg-white border border-[#E7E2D9] p-8 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-bold text-[#1C1917] mb-2">Gemini AI Studio</h2>
+        <p class="text-sm text-gray-600">Generate copy descriptions for your products.</p>
+      </div>
+    </div>
+
   </main>
+
+  <!-- TAB SWITCHING SCRIPT -->
+  <script>
+    function showTab(tabName) {
+      // Hide all tabs
+      const tabs = document.querySelectorAll('.tab-view');
+      tabs.forEach(tab => tab.classList.remove('active'));
+
+      // Show selected tab
+      const target = document.getElementById('tab-' + tabName);
+      if (target) {
+        target.classList.add('active');
+      }
+    }
+  </script>
 
 </body>
 </html>
