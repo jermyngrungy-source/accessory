@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seller Dashboard | Artisan Haven</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: #FBF9F5;
+      color: #1C1917;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- TOP NAV HEADER -->
+  <header class="bg-[#F8F5F0] border-b border-[#E7E2D9] sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-9 h-9 bg-[#5C4033] text-[#FBF9F5] flex items-center justify-center font-bold text-lg italic">AH</div>
+        <div>
+          <h1 class="font-bold text-lg leading-none text-[#1C1917]">Artisan Haven</h1>
+          <span class="text-[9px] font-semibold tracking-widest uppercase text-gray-500">Seller Portal</span>
+        </div>
+      </a>
+
+      <!-- Quick Actions & User Profile -->
+      <div class="flex items-center gap-4">
+        <button onclick="openModal()" class="bg-[#5C4033] hover:bg-[#1C1917] text-white text-xs font-bold px-4 py-2 rounded-md transition-all flex items-center gap-2 shadow-sm cursor-pointer">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          Add Product
+        </button>
+
+        <div class="flex items-center border border-gray-300 bg-white rounded pl-2 pr-2.5 py-1 gap-2 shadow-sm">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" class="w-6 h-6 rounded-full object-cover" alt="Avatar">
+          <span class="text-xs font-bold text-gray-800">MATEO DELA CRUZ</span>
+          <span class="bg-[#5C4033] text-white text-[9px] font-bold px-1.5 py-0.5 rounded uppercase">SELLER</span>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- DASHBOARD CONTAINER -->
+  <div class="max-w-7xl mx-auto w-full px-6 py-8 flex-grow grid grid-cols-1 lg:grid-cols-5 gap-8">
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="lg:col-span-1 space-y-2">
+      <button onclick="switchTab('overview')" id="nav-overview" class="tab-btn active w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center gap-3 bg-[#5C4033] text-white">
+        <span>📊</span> Overview
+      </button>
+      <button onclick="switchTab('products')" id="nav-products" class="tab-btn w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center gap-3 text-gray-700 hover:bg-[#E2DDD3]">
+        <span>📦</span> Products (<span id="product-count-badge">3</span>)
+      </button>
+      <button onclick="switchTab('orders')" id="nav-orders" class="tab-btn w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center gap-3 text-gray-700 hover:bg-[#E2DDD3]">
+        <span>🛍️</span> Orders
+      </button>
+      <button onclick="switchTab('ai-generator')" id="nav-ai-generator" class="tab-btn w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center gap-3 text-gray-700 hover:bg-[#E2DDD3]">
+        <span>✨</span> Gemini AI Copywriter
+      </button>
+    </aside>
+
+    <!-- MAIN VIEW AREA -->
+    <main class="lg:col-span-4">
+
+      <!-- TAB 1: OVERVIEW -->
+      <div id="view-overview" class="view-panel space-y-6">
+        
+        <!-- Metrics Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-white border border-[#E7E2D9] p-5 rounded-lg shadow-sm">
+            <span class="text-xs font-bold uppercase text-gray-500">Total Sales Revenue</span>
+            <div class="text-2xl font-bold text-[#5C4033] mt-2">₱14,850.00</div>
+            <span class="text-[10px] text-green-600 font-semibold mt-1 inline-block">↑ 12% from last week</span>
+          </div>
+
+          <div class="bg-white border border-[#E7E2D9] p-5 rounded-lg shadow-sm">
+            <span class="text-xs font-bold uppercase text-gray-500">Active Listings</span>
+            <div id="metric-active-products" class="text-2xl font-bold text-[#1C1917] mt-2">3</div>
+            <span class="text-[10px] text-gray-500 mt-1 inline-block">Handcrafted items available</span>
+          </div>
+
+          <div class="bg-white border border-[#E7E2D9] p-5 rounded-lg shadow-sm">
+            <span class="text-xs font-bold uppercase text-gray-500">Completed Orders</span>
+            <div class="text-2xl font-bold text-[#1C1917] mt-2">18</div>
+            <span class="text-[10px] text-blue-600 font-semibold mt-1 inline-block">via PayMongo Gateway</span>
+          </div>
+        </div>
+
+        <!-- Recent Activity Table -->
+        <div class="bg-white border border-[#E7E2D9] rounded-lg shadow-sm p-6">
+          <h3 class="font-bold text-lg mb-4 text-[#1C1917]">Recent PayMongo Orders</h3>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-gray-600">
+              <thead class="bg-[#F8F5F0] border-b border-[#E7E2D9] text-gray-700 font-bold uppercase">
+                <tr>
+                  <th class="p-3">Order ID</th>
+                  <th class="p-3">Product Name</th>
+                  <th class="p-3">Amount</th>
+                  <th class="p-3">Payment Method</th>
+                  <th class="p-3">Status</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#E7E2D9]">
+                <tr>
+                  <td class="p-3 font-mono">ORD-9021</td>
+                  <td class="p-3 font-semibold text-gray-800">Handcarved Wooden Mug</td>
+                  <td class="p-3">₱1,250.00</td>
+                  <td class="p-3">GCash</td>
+                  <td class="p-3"><span class="bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold">PAID</span></td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-mono">ORD-9019</td>
+                  <td class="p-3 font-semibold text-gray-800">Minimalist Clay Vase</td>
+                  <td class="p-3">₱2,400.00</td>
+                  <td class="p-3">Credit Card</td>
+                  <td class="p-3"><span class="bg-green-100 text-green-800 px-2 py-0.5 rounded font-bold">PAID</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TAB 2: PRODUCTS -->
+      <div id="view-products" class="view-panel hidden space-y-6">
+        <div class="flex justify-between items-center">
+          <h2 class="text-xl font-bold text-[#1C1917]">Manage Inventory</h2>
+          <button onclick="openModal()" class="bg-[#5C4033] text-white text-xs font-bold px-3 py-2 rounded">
+            + Add New Item
+          </button>
+        </div>
+
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </div>
+
+      <!-- TAB 3: ORDERS -->
+      <div id="view-orders" class="view-panel hidden">
+        <div class="bg-white border border-[#E7E2D9] p-6 rounded-lg shadow-sm">
+          <h2 class="text-xl font-bold text-[#1C1917] mb-4">Order Fulfillment</h2>
+          <p class="text-xs text-gray-500">Live order webhook records from PayMongo will synchronize here automatically.</p>
+        </div>
+      </div>
+
+      <!-- TAB 4: GEMINI AI COPYWRITER -->
+      <div id="view-ai-generator" class="view-panel hidden">
+        <div class="bg-white border border-[#E7E2D9] p-6 rounded-lg shadow-sm space-y-4">
+          <div class="flex items-center gap-2">
+            <h2 class="text-xl font-bold text-[#1C1917]">Gemini AI Product Description Generator</h2>
+            <span class="bg-[#E2DDD3] text-[#5C4033] text-[10px] font-bold px-2 py-0.5 rounded border border-[#CFC7B9]">AI Powered</span>
+          </div>
+          <p class="text-xs text-gray-600">Enter simple product details below to automatically draft a high-converting minimalist artisan description.</p>
+
+          <div>
+            <label class="block text-xs font-bold uppercase text-gray-600 mb-1">Product Title / Notes</label>
+            <input id="ai-prompt-input" type="text" placeholder="e.g., Handcrafted Acacia Wood Salad Bowl with natural oil finish" class="w-full border border-gray-300 rounded p-2 text-xs">
+          </div>
+
+          <button onclick="generateAIDescription()" id="ai-generate-btn" class="bg-[#5C4033] text-white text-xs font-bold px-4 py-2 rounded hover:bg-[#1C1917]">
+            Generate Description
+          </button>
+
+          <div id="ai-result-box" class="hidden p-4 bg-[#FBF9F5] border border-[#E7E2D9] rounded text-xs text-gray-800 whitespace-pre-wrap leading-relaxed"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ADD PRODUCT MODAL -->
+  <div id="product-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-lg max-w-md w-full p-6 space-y-4 shadow-xl">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h3 class="font-bold text-lg text-[#5C4033]">Add New Product</h3>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-black font-bold">✕</button>
+      </div>
+
+      <form id="add-product-form" onsubmit="handleAddProduct(event)" class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Product Title</label>
+          <input type="text" id="modal-title" required placeholder="e.g., Ceramic Coffee Dripper" class="w-full border border-gray-300 rounded p-2 text-xs">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Price (PHP)</label>
+          <input type="number" id="modal-price" required min="1" step="0.01" placeholder="1250" class="w-full border border-gray-300 rounded p-2 text-xs">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Image URL</label>
+          <input type="url" id="modal-image" required placeholder="https://images.unsplash.com/..." class="w-full border border-gray-300 rounded p-2 text-xs">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Description</label>
+          <textarea id="modal-desc" rows="3" required placeholder="Handcrafted with organic materials..." class="w-full border border-gray-300 rounded p-2 text-xs"></textarea>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" onclick="closeModal()" class="px-3 py-1.5 border rounded text-xs font-bold text-gray-600">Cancel</button>
+          <button type="submit" class="px-4 py-1.5 bg-[#5C4033] text-white rounded text-xs font-bold hover:bg-[#1C1917]">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- DASHBOARD CONTROLLER SCRIPT -->
+  <script>
+    // Initial State Data
+    let products = [
+      { id: 1, title: 'Handcarved Wooden Mug', price: 1250, image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=400&q=80', desc: 'Sustainably sourced mahogany wood carved by local artisans.' },
+      { id: 2, title: 'Minimalist Clay Vase', price: 2400, image: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&w=400&q=80', desc: 'Matte terracotta ceramic vase, ideal for dried florals.' },
+      { id: 3, title: 'Woven Table Runner', price: 850, image: 'https://images.unsplash.com/photo-1606744824163-985d376605aa?auto=format&fit=crop&w=400&q=80', desc: '100% organic cotton hand-loomed table accent.' }
+    ];
+
+    // Tab Switcher Function
+    function switchTab(tabId) {
+      document.querySelectorAll('.view-panel').forEach(panel => panel.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-[#5C4033]', 'text-white');
+        btn.classList.add('text-gray-700', 'hover:bg-[#E2DDD3]');
+      });
+
+      const activePanel = document.getElementById(`view-${tabId}`);
+      const activeBtn = document.getElementById(`nav-${tabId}`);
+
+      if (activePanel && activeBtn) {
+        activePanel.classList.remove('hidden');
+        activeBtn.classList.add('bg-[#5C4033]', 'text-white');
+        activeBtn.classList.remove('text-gray-700', 'hover:bg-[#E2DDD3]');
+      }
+    }
+
+    // Render Product Inventory Cards
+    function renderProducts() {
+      const grid = document.getElementById('products-grid');
+      grid.innerHTML = products.map(p => `
+        <div class="bg-white border border-[#E7E2D9] rounded-lg overflow-hidden shadow-sm flex flex-col justify-between">
+          <img src="${p.image}" class="w-full h-40 object-cover" alt="${p.title}">
+          <div class="p-4 flex-grow space-y-2">
+            <h4 class="font-bold text-sm text-[#1C1917]">${p.title}</h4>
+            <p class="text-xs text-gray-500 line-clamp-2">${p.desc}</p>
+            <div class="text-sm font-bold text-[#5C4033]">₱${parseFloat(p.price).toLocaleString('en-PH', {minimumFractionDigits: 2})}</div>
+          </div>
+          <div class="px-4 pb-4">
+            <button onclick="deleteProduct(${p.id})" class="w-full py-1 bg-red-50 text-red-600 hover:bg-red-100 rounded text-xs font-bold transition-colors">
+              Remove Item
+            </button>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('product-count-badge').textContent = products.length;
+      document.getElementById('metric-active-products').textContent = products.length;
+    }
+
+    // Modal Operations
+    function openModal() { document.getElementById('product-modal').classList.remove('hidden'); document.getElementById('product-modal').classList.add('flex'); }
+    function closeModal() { document.getElementById('product-modal').classList.add('hidden'); document.getElementById('product-modal').classList.remove('flex'); }
+
+    // Add Product Handler
+    function handleAddProduct(e) {
+      e.preventDefault();
+      const newProduct = {
+        id: Date.now(),
+        title: document.getElementById('modal-title').value,
+        price: parseFloat(document.getElementById('modal-price').value),
+        image: document.getElementById('modal-image').value,
+        desc: document.getElementById('modal-desc').value
+      };
+
+      products.unshift(newProduct);
+      renderProducts();
+      closeModal();
+      document.getElementById('add-product-form').reset();
+    }
+
+    // Delete Product
+    function deleteProduct(id) {
+      products = products.filter(p => p.id !== id);
+      renderProducts();
+    }
+
+    // Simulated Gemini AI Generator
+    function generateAIDescription() {
+      const prompt = document.getElementById('ai-prompt-input').value;
+      const btn = document.getElementById('ai-generate-btn');
+      const box = document.getElementById('ai-result-box');
+
+      if (!prompt) return alert('Please input a product title or concept first.');
+
+      btn.textContent = 'Generating...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        box.textContent = `✨ Crafted Description:\n\n"${prompt} — Meticulously handcrafted with warm, organic textures designed for mindful living. Each piece is unique, reflecting authentic artisan craftsmanship while elevating your everyday spaces."`;
+        box.classList.remove('hidden');
+        btn.textContent = 'Generate Description';
+        btn.disabled = false;
+      }, 800);
+    }
+
+    // Initialize Dashboard on Load
+    document.addEventListener('DOMContentLoaded', renderProducts);
+  </script>
+</body>
+</html>
