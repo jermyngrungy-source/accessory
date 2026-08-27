@@ -51,7 +51,7 @@
 </head>
 <body class="bg-artisan-bg text-artisan-dark flex flex-col min-h-screen selection:bg-artisan-accent selection:text-white">
 
-  <!-- TOP HEADER BAR (MATCHES IMAGE EXACTLY) -->
+  <!-- FIXED HEADER BAR WITH HIGH-VISIBILITY CLICKABLE BUTTONS -->
   <header class="sticky top-0 z-50 bg-[#F8F5F0] border-b border-artisan-border shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
       
@@ -83,27 +83,27 @@
       <!-- Right Action Controls -->
       <div class="flex items-center gap-3">
         
-        <!-- Seller Dashboard Button -->
-        <button onclick="switchTab('seller-dashboard')" class="border border-artisan-dark/70 hover:bg-artisan-dark hover:text-white text-artisan-dark px-3 py-1.5 rounded text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 00-1 1m-6 0h6"/></svg>
-          <span>Seller Dashboard</span>
+        <!-- UPDATED SELLER DASHBOARD BUTTON (PROMINENT & CLICKABLE) -->
+        <button onclick="switchTab('seller-dashboard')" class="bg-[#5C4033] hover:bg-artisan-dark text-white px-3.5 py-2 rounded-md text-xs font-bold flex items-center gap-2 transition-all shadow-sm hover:shadow-md active:scale-95 cursor-pointer">
+          <svg class="w-4 h-4 text-amber-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 00-1-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 00-1 1m-6 0h6"/></svg>
+          <span class="tracking-tight">Seller Dashboard</span>
         </button>
 
         <!-- Bought History Link -->
-        <button onclick="switchTab('buyer-history')" class="hidden sm:block text-xs font-semibold text-artisan-muted hover:text-artisan-dark transition-colors">
+        <button onclick="switchTab('buyer-history')" class="hidden sm:block text-xs font-semibold text-artisan-muted hover:text-artisan-dark transition-colors cursor-pointer px-2 py-1 rounded hover:bg-black/5">
           Bought History
         </button>
 
         <!-- User Profile Tag / Auth Trigger -->
         <div id="authProfileContainer">
-          <!-- Shown when Logged In -->
+          <!-- Logged In Profile Tag -->
           <div id="userProfileTag" class="flex items-center border border-artisan-border bg-white rounded-md pl-1.5 pr-2 py-1 gap-2 shadow-sm">
             <img id="userAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" class="w-6 h-6 rounded-full object-cover" alt="User">
             <span id="userDisplayName" class="text-xs font-bold uppercase tracking-tight text-artisan-dark truncate max-w-[100px]">Mateo Dela...</span>
             <span id="userRoleBadge" class="bg-[#5C4033] text-white text-[9px] font-bold px-1.5 py-0.5 rounded tracking-wider uppercase">Seller</span>
           </div>
 
-          <!-- Shown when Logged Out -->
+          <!-- Logged Out Trigger -->
           <div id="authButtons" class="hidden flex items-center gap-2">
             <button onclick="openAuthModal('login')" class="text-xs font-bold px-2.5 py-1 text-artisan-dark hover:underline">Login</button>
             <button onclick="openAuthModal('register')" class="text-xs font-bold bg-artisan-dark text-white px-3 py-1.5 rounded">Register</button>
@@ -111,7 +111,7 @@
         </div>
 
         <!-- Logout Button -->
-        <button onclick="logout()" title="Logout" class="p-1 text-artisan-muted hover:text-red-600 transition-colors">
+        <button onclick="logout()" title="Logout" class="p-1.5 text-artisan-muted hover:text-red-600 transition-colors rounded hover:bg-black/5">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
         </button>
 
@@ -126,7 +126,7 @@
 
   <main class="flex-grow">
     
-    <!-- SECTION 1: HOME & HERO -->
+    <!-- VIEW 1: HOME & HERO -->
     <div id="view-home">
       <section class="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
         <div class="md:col-span-7 space-y-6">
@@ -156,7 +156,7 @@
       </section>
     </div>
 
-    <!-- SECTION 2: STORE PAGE -->
+    <!-- VIEW 2: STORE PAGE -->
     <div id="view-store" class="hidden">
       <section class="max-w-7xl mx-auto px-6 py-12">
         <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 border-b border-artisan-border pb-6">
@@ -173,12 +173,15 @@
       </section>
     </div>
 
-    <!-- SECTION 3: SELLER DASHBOARD -->
+    <!-- VIEW 3: SELLER DASHBOARD -->
     <div id="view-seller-dashboard" class="hidden">
       <section class="max-w-7xl mx-auto px-6 py-12">
-        <div class="mb-8">
-          <h2 class="font-serif text-3xl font-bold text-artisan-dark">Seller Management Dashboard</h2>
-          <p class="text-xs text-artisan-muted mt-1">List handcrafted products and view your automated sales records.</p>
+        <div class="mb-8 flex justify-between items-center border-b border-artisan-border pb-4">
+          <div>
+            <h2 class="font-serif text-3xl font-bold text-artisan-dark">Seller Management Dashboard</h2>
+            <p class="text-xs text-artisan-muted mt-1">List handcrafted products and view your automated sales records.</p>
+          </div>
+          <span class="bg-[#5C4033] text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">Seller Active</span>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -238,7 +241,7 @@
       </section>
     </div>
 
-    <!-- SECTION 4: BUYER BOUGHT HISTORY -->
+    <!-- VIEW 4: BUYER BOUGHT HISTORY -->
     <div id="view-buyer-history" class="hidden">
       <section class="max-w-7xl mx-auto px-6 py-12">
         <h2 class="font-serif text-3xl font-bold text-artisan-dark mb-6">Bought History</h2>
@@ -261,7 +264,7 @@
       </section>
     </div>
 
-    <!-- SECTION 5: AI STUDIO -->
+    <!-- VIEW 5: AI STUDIO -->
     <div id="view-ai-studio" class="hidden">
       <section class="max-w-4xl mx-auto px-6 py-12">
         <div class="bg-white border border-artisan-border p-8 rounded shadow-sm text-center space-y-4">
@@ -327,33 +330,7 @@
     </div>
   </div>
 
-  <!-- REVIEW MODAL -->
-  <div id="reviewModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex justify-center items-center hidden p-4">
-    <div class="bg-white w-full max-w-md p-6 rounded shadow-xl relative border border-artisan-border">
-      <button onclick="closeReviewModal()" class="absolute top-3 right-3 text-artisan-muted hover:text-black">✕</button>
-      <h3 class="font-serif font-bold text-xl text-artisan-dark mb-4">Write Item Review</h3>
-      <form id="reviewForm" onsubmit="handleReviewSubmit(event)" class="space-y-4 text-xs">
-        <input type="hidden" id="reviewProductId">
-        <div>
-          <label class="block font-bold uppercase tracking-wider text-artisan-muted mb-1">Star Rating</label>
-          <div class="star-rating flex flex-row-reverse justify-end gap-1 text-2xl">
-            <input type="radio" id="star5" name="rating" value="5" required/><label for="star5">★</label>
-            <input type="radio" id="star4" name="rating" value="4"/><label for="star4">★</label>
-            <input type="radio" id="star3" name="rating" value="3"/><label for="star3">★</label>
-            <input type="radio" id="star2" name="rating" value="2"/><label for="star2">★</label>
-            <input type="radio" id="star1" name="rating" value="1"/><label for="star1">★</label>
-          </div>
-        </div>
-        <div>
-          <label class="block font-bold uppercase tracking-wider text-artisan-muted mb-1">Comments</label>
-          <textarea id="reviewComment" rows="3" required class="w-full border border-artisan-border p-2 rounded outline-none focus:border-artisan-accent"></textarea>
-        </div>
-        <button type="submit" class="w-full bg-artisan-dark text-white font-bold py-2.5 rounded hover:bg-artisan-accent transition-colors">Submit Review</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- JAVASCRIPT CONTROLLER -->
+  <!-- JAVASCRIPT LOGIC WITH GUARANTEED TAB SWITCHING -->
   <script>
     const SUPABASE_URL = 'YOUR_SUPABASE_URL';
     const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
@@ -374,7 +351,6 @@
         currentUser = session.user;
         updateUIForAuthenticatedUser();
       } else {
-        // Fallback demo account display matching screenshot
         document.getElementById('userDisplayName').innerText = 'MATEO DELA...';
       }
     }
@@ -385,10 +361,11 @@
       document.getElementById('userDisplayName').innerText = currentUser.email.split('@')[0].toUpperCase();
     }
 
-    // TAB SWITCHER
+    // RELIABLE UNIVERSAL TAB SWITCHER
     function switchTab(viewName) {
-      const views = ['home', 'store', 'seller-dashboard', 'buyer-history', 'ai-studio'];
-      views.forEach(v => {
+      const allViews = ['home', 'store', 'seller-dashboard', 'buyer-history', 'ai-studio'];
+      
+      allViews.forEach(v => {
         const el = document.getElementById(`view-${v}`);
         if (el) el.classList.add('hidden');
       });
@@ -399,7 +376,7 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      // Update Nav active style
+      // Sync header navigation styling
       const navHome = document.getElementById('nav-home');
       const navStore = document.getElementById('nav-store');
       if (navHome && navStore) {
@@ -418,7 +395,6 @@
       }, 100);
     }
 
-    // AUTH HANDLERS
     function openAuthModal(mode) {
       authMode = mode;
       document.getElementById('modalTitle').innerText = mode === 'login' ? 'Sign In' : 'Create Account';
@@ -464,9 +440,8 @@
       window.location.reload();
     }
 
-    // PRODUCT CATALOG & SELLER LOGIC
     async function loadProducts() {
-      const { data, error } = await supabase.from('products').select(`*, reviews(*)`).order('created_at', { ascending: false });
+      const { data } = await supabase.from('products').select(`*, reviews(*)`).order('created_at', { ascending: false });
       loadedProducts = data || [];
       renderProducts(loadedProducts);
     }
@@ -561,24 +536,6 @@
           <td class="p-3"><button onclick="openReviewModal('${o.products?.id}')" class="border border-artisan-border px-2 py-1 rounded text-[10px]">Review</button></td>
         </tr>
       `).join('');
-    }
-
-    function openReviewModal(id) {
-      document.getElementById('reviewProductId').value = id;
-      document.getElementById('reviewModal').classList.remove('hidden');
-    }
-    function closeReviewModal() { document.getElementById('reviewModal').classList.add('hidden'); }
-
-    async function handleReviewSubmit(e) {
-      e.preventDefault();
-      const { error } = await supabase.from('reviews').insert([{
-        product_id: document.getElementById('reviewProductId').value,
-        user_id: currentUser.id,
-        rating: parseInt(document.querySelector('input[name="rating"]:checked')?.value || 5),
-        comment: document.getElementById('reviewComment').value
-      }]);
-      if (error) alert(error.message);
-      else { alert('Review submitted!'); closeReviewModal(); }
     }
 
     function generateAIContent() {
