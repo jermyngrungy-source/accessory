@@ -1,0 +1,7 @@
+{
+  "name": "Artisan Haven - Handcrafted Minimalist Goods",
+  "description": "Handcrafted minimalist leather goods e-commerce marketplace featuring PayMongo GCash payments, seller dashboard, buyer order history, star reviews, and Gemini AI copywriting & chatbot assistant.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
